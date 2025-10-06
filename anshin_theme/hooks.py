@@ -4,7 +4,7 @@ app_publisher = "Bharatbodh"
 app_description = "Anshin Theme"
 app_email = "saket.vaidya@gmail.com"
 app_license = "mit"
-
+#app_include_css = "/assets/anshin_theme/css/anshin_theme.css"
 # Apps
 # ------------------
 
@@ -25,7 +25,7 @@ app_license = "mit"
 # ------------------
 
 # include js, css files in header of desk.html
-# app_include_css = "/assets/anshin_theme/css/anshin_theme.css"
+app_include_css = "/assets/anshin_theme/css/anshin_theme.css"
 # app_include_js = "/assets/anshin_theme/js/anshin_theme.js"
 
 # include js, css files in header of web template
