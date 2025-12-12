@@ -1,0 +1,270 @@
+body {
+      background: white !important;
+    }
+
+    /* === Primary Button === */
+    .btn.btn-primary {
+      background: linear-gradient(to bottom, #f8573f, #d62323) !important;
+      color: white !important;
+      border: none !important;
+    }
+
+    /* === Cancel/Secondary Button === */
+    button.btn.btn-secondary,
+    button.btn.btn-default,
+    .btn.btn-secondary:not(.btn-primary),
+    .btn.btn-default:not(.btn-primary),
+    .btn.btn-light,
+    .btn-outline,
+    .btn-outline-secondary {
+      background-color: white !important;
+      border: 1px solid #d4bfae !important;
+      color: black !important;
+    }
+
+    /* Cancel button specifically */
+    button.btn.btn-secondary.btn-default.btn-sm[data-label="Cancel"] {
+      color: black !important;
+      background-color: white !important;
+      border: 1px solid #d4bfae !important;
+    }
+
+    /* Button Text Fix */
+    .btn.btn-secondary *,
+    .btn.btn-default * {
+      color: black !important;
+    }
+
+    .btn:hover {
+      opacity: 0.9 !important;
+    }
+
+    /* === Child Table Header === */
+    .grid-heading-row > div {
+      background-color: #f3e8dd !important;
+      color: black !important;
+      font-weight: 600 !important;
+    }
+
+    /* === Navbar Gradient === */
+    .page-head,
+    .page-head-content,
+    .navbar,
+    .navbar-default {
+      background: linear-gradient(to right, #e66e66, #7c4df1) !important;
+      color: white;
+    }
+
+    .navbar *,
+    .page-head *,
+    .page-head-content * {
+      color: white;
+      fill: white;
+    }
+
+    .page-head .row.flex.align-center.page-head-content.justify-between {
+      background: transparent !important;
+    }
+
+    /* === Search Bar === */
+    .search-bar input[type="text"],
+    input[data-fieldname="search"],
+    input.list-search,
+    input.input-with-feedback,
+    input.form-control.input-sm,
+    input[data-doctype="Search Link"] {
+      color: black !important;
+      background-color: white !important;
+      border: 1px solid #6351a2 !important;
+      border-radius: 8px !important;
+      box-shadow: none !important;
+    }
+
+    ::placeholder {
+      color: #999 !important;
+    }
+    .search-bar .awesomplete{ background: linear-gradient(to right, #A05FA8, #9358A2);}
+
+    /* === Input Field Styling === */
+    input[type="text"]:not(.search-bar input),
+    input[type="number"],
+    input[type="email"],
+    select,
+    textarea,
+    .form-control,
+    .input-with-feedback {
+      border: 1px solid #c4b3ec !important;
+      background-color: white !important;
+      color: #000 !important;
+      border-radius: 8px !important;
+      transition: border-color 0.2s ease-in-out;
+    }
+
+    /* === Dropdown Menu - COMPREHENSIVE FIX === */
+    .page-head .container .row .page-actions .dropdown-menu .dropdown-item,
+    .dropdown-menu,
+    .dropdown-menu .dropdown-item,
+    a.grey-link.dropdown-item,
+    .dropdown-menu li,
+    .dropdown-menu li a,
+    .dropdown-menu li span,
+    .dropdown-menu .menu-item-label,
+    .dropdown-menu .pull-right,
+    .dropdown-menu kbd,
+    .dropdown-menu .text-muted {
+      background-color: #fdf1e7 !important;
+      color: black !important;
+      font-weight: 500 !important;
+    }
+
+    .dropdown-menu .dropdown-item:hover,
+    a.grey-link.dropdown-item:hover,
+    .dropdown-menu li:hover,
+    .dropdown-menu li:hover a,
+    .dropdown-menu li:hover span {
+      background-color: #f3e8dd !important;
+      color: black !important;
+    }
+
+    /* Force all dropdown text elements to be black */
+    .dropdown-menu:not(#toolbar-user) *,
+    .dropdown-menu:not(#toolbar-user) .dropdown-item *,
+    .dropdown-menu:not(#toolbar-user) li *,
+    .dropdown-menu:not(#toolbar-user) a *,
+    .dropdown-menu:not(#toolbar-user) span *,
+    .dropdown-menu:not(#toolbar-user) .menu-item-label *,
+    .dropdown-menu:not(#toolbar-user) kbd *,
+    .dropdown-menu:not(#toolbar-user) .text-muted *,
+    .dropdown-menu:not(#toolbar-user) .pull-right * {
+      color: black !important;
+    }
+
+    /* === Awesomplete Autocomplete Dropdown (FINAL FIX) === */
+    .awesomplete {
+      background:white;
+    }
+
+    .awesomplete, .awesomplete * {
+  background-color: transparent !important;
+  color: black !important;
+}
+
+    .awesomplete ul {
+      background-color: white !important;
+      border: 1px solid #d4bfae !important;
+      border-radius: 6px !important;
+    }
+
+    .awesomplete li {
+      background-color: transparent !important;
+      color: black !important;
+      font-weight: 500 !important;
+      padding: 6px 12px !important;
+    }
+
+    .awesomplete li[aria-selected="true"] {
+      background-color: transparent !important;
+      color: black !important;
+    }
+
+    .awesomplete li:hover {
+      background-color: #f3e8dd !important;
+      color: black !important;
+    }
+
+    .awesomplete li *,
+    .awesomplete li span,
+    .awesomplete li a {
+      color: black !important;
+    }
+
+    .awesomplete mark {
+      background: none !important;
+      color: black !important;
+      font-weight: bold !important;
+      display: inline !important;
+    }
+
+    /* === Additional Dropdown Selectors === */
+    .menu-btn-group .dropdown-menu,
+    .menu-btn-group .dropdown-menu .dropdown-item,
+    .menu-btn-group .dropdown-menu li,
+    .menu-btn-group .dropdown-menu li a,
+    .menu-btn-group .dropdown-menu li span,
+    .show .dropdown-menu,
+    .show .dropdown-menu .dropdown-item,
+    .show .dropdown-menu li,
+    .show .dropdown-menu li a,
+    .show .dropdown-menu li span {
+      background-color: #fdf1e7 !important;
+      color: black !important;
+    }
+
+    .menu-btn-group .dropdown-menu .dropdown-item:hover,
+    .menu-btn-group .dropdown-menu li:hover,
+    .menu-btn-group .dropdown-menu li:hover a,
+    .menu-btn-group .dropdown-menu li:hover span,
+    .show .dropdown-menu .dropdown-item:hover,
+    .show .dropdown-menu li:hover,
+    .show .dropdown-menu li:hover a,
+    .show .dropdown-menu li:hover span {
+      background-color: #f3e8dd !important;
+      color: black !important;
+    }
+
+    /* === Status + Tab Colors === */
+    .indicator-pill,
+    .indicator,
+    .indicator span,
+    .indicator-pill span,
+    .status-text {
+      color: black !important;
+    }
+
+    .form-tabs .nav-item a.nav-link,
+    .form-tabs .nav-item a.nav-link.active {
+      color: #4e2e7f !important;
+    }
+
+    .comment-box .comment-input-header,
+    .form-section .section-head,
+    .form-dashboard-section .section-head,
+    .timeline-item.activity-title h4 {
+      color: #4e2e7f !important;
+    }
+
+    /* === Avatar Styling === */
+    .avatar-frame.standard-image {
+      background-color: #7c4df1 !important;
+      border: 2px solid white !important;
+      color: white !important;
+    }
+
+    .avatar-frame.standard-image span {
+      color: white !important;
+    }
+
+    /* === User Dropdown === */
+    #toolbar-user.dropdown-menu {
+      background: linear-gradient(to right, #e66e66, #7c4df1) !important;
+      color: white !important;
+      border-radius: 12px !important;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15) !important;
+      padding: 8px !important;
+      border: none !important;
+    }
+
+    #toolbar-user .dropdown-item,
+    #toolbar-user .btn-reset.dropdown-item {
+      background: transparent !important;
+      color: white !important;
+      border-radius: 8px !important;
+      padding: 6px 12px !important;
+      font-weight: 500;
+    }
+
+    #toolbar-user .dropdown-item:hover,
+    #toolbar-user .btn-reset.dropdown-item:hover {
+      background: rgba(255, 255, 255, 0.1) !important;
+    }
+

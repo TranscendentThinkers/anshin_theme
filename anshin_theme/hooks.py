@@ -25,7 +25,7 @@ app_license = "mit"
 # ------------------
 
 # include js, css files in header of desk.html
-app_include_css = "/assets/anshin_theme/css/anshin_theme.css"
+#app_include_css = "/assets/anshin_theme/css/anshin_theme.css"
 # app_include_js = "/assets/anshin_theme/js/anshin_theme.js"
 
 # include js, css files in header of web template
@@ -55,6 +55,17 @@ app_include_css = "/assets/anshin_theme/css/anshin_theme.css"
 
 # Home Pages
 # ----------
+
+app_include_css = [
+    "/assets/anshin_theme/css/theme.css",
+    "/assets/anshin_theme/css/hide.css"
+]
+web_include_js = [
+    "/assets/anshin_theme/js/candidate_matching_algorithms.js"
+]
+web_include_css = [
+    "https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+]
 
 # application home page (will override Website Settings)
 # home_page = "login"

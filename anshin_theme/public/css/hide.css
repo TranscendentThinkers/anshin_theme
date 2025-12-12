@@ -1,0 +1,242 @@
+// CSS to hide ONLY the chart, keeping filters and data table
+    const hideChartCSS = `
+        /* Hide only the SVG chart element itself */
+        svg.frappe-chart.chart {
+            display: none !important;
+        }
+
+        /* Hide chart by specific dimensions from your screenshot */
+        svg[width="701"][height="280"] {
+            display: none !important;
+        }
+
+        /* More specific targeting */
+        .frappe-chart.chart[width="701"][height="280"] {
+            display: none !important;
+        }
+
+        /* Target the chart wrapper but NOT report containers */
+        .chart-wrapper:not(.report-wrapper):not(.page-container) {
+            display: none !important;
+        }
+
+        /* Hide chart legend if it exists */
+        .chart-legend {
+            display: none !important;
+        }
+    `;
+
+    // Function to inject CSS
+    function injectHideCSS() {
+        if (document.getElementById('chart-hider-css')) {
+            return; // CSS already injected
+        }
+
+        const style = document.createElement('style');
+        style.id = 'chart-hider-css';
+        style.textContent = hideChartCSS;
+
+        // Try to inject into head, fallback to body
+        const target = document.head || document.body || document.documentElement;
+        if (target) {
+            target.appendChild(style);
+            console.log('✅ Chart hiding CSS injected');
+            return true;
+        }
+        return false;
+    }
+
+    // Function to hide charts directly (DOM manipulation) - MORE PRECISE
+    function hideChartsDirectly() {
+        // Only target very specific chart elements
+        const chartSelectors = [
+            'svg.frappe-chart.chart',              // Most specific
+            'svg[width="701"][height="280"]',      // Your exact chart dimensions
+            '.frappe-chart.chart[width="701"]',    // Alternative with dimensions
+        ];
+
+        let hiddenCount = 0;
+
+        chartSelectors.forEach(selector => {
+            const elements = document.querySelectorAll(selector);
+            elements.forEach(element => {
+                // Additional safety check - only hide if it's actually a chart
+                if (element &&
+                    (element.tagName === 'svg' || element.classList.contains('frappe-chart')) &&
+                    element.style.display !== 'none') {
+
+                    element.style.display = 'none';
+                    hiddenCount++;
+                    console.log(🚫 Hidden chart element:, element);
+
+                    // Don't hide parent containers - this was the problem!
+                }
+            });
+        });
+
+        return hiddenCount;
+    }
+
+    // Function to create status indicator - DISABLED
+    function createStatusIndicator(status, count = 0) {
+        // Remove any existing indicator
+        const existingIndicator = document.getElementById('chart-hider-indicator');
+        if (existingIndicator) {
+            existingIndicator.remove();
+        }
+
+        // Don't create new indicator - just log to console instead
+        if (status === 'hidden') {
+            console.log(✅ Charts Hidden (${count}));
+        } else if (status === 'active') {
+            console.log('👁️ Chart Hider Active');
+        } else if (status === 'disabled') {
+            console.log('💤 Chart Hider Disabled');
+        }
+
+        // No visual indicator created - prevents overlap with login button
+    }
+
+    // Toggle chart hiding on/off - SIMPLIFIED (no visual indicator)
+    function toggleChartHiding() {
+        const cssElement = document.getElementById('chart-hider-css');
+        if (cssElement) {
+            cssElement.remove();
+            console.log('📊 Chart hiding disabled - refresh page to see charts');
+            // Refresh page to show charts
+            setTimeout(() => window.location.reload(), 1000);
+        } else {
+            injectHideCSS();
+            hideChartsDirectly();
+            console.log('🚫 Chart hiding enabled');
+        }
+    }
+
+    // Main hiding function
+    function hideCharts() {
+        let attempts = 0;
+        let totalHidden = 0;
+
+        const hideInterval = setInterval(() => {
+            attempts++;
+
+            // Inject CSS if not already done
+            injectHideCSS();
+
+            // Hide charts directly
+            const hiddenCount = hideChartsDirectly();
+            totalHidden += hiddenCount;
+
+            if (hiddenCount > 0) {
+                createStatusIndicator('hidden', totalHidden);
+                console.log(✅ Successfully hidden ${totalHidden} chart elements);
+            } else if (attempts === 1) {
+                createStatusIndicator('active');
+            }
+
+            // Stop after max attempts
+            if (attempts >= MAX_ATTEMPTS) {
+                clearInterval(hideInterval);
+                if (totalHidden === 0) {
+                    console.log('ℹ️ No charts found to hide');
+                }
+            }
+        }, CHECK_INTERVAL);
+
+        // Also set up mutation observer for dynamic content - SAFER VERSION
+        const observer = new MutationObserver((mutations) => {
+            mutations.forEach((mutation) => {
+                if (mutation.type === 'childList' && mutation.addedNodes.length > 0) {
+                    for (let node of mutation.addedNodes) {
+                        if (node.nodeType === Node.ELEMENT_NODE) {
+                            // Only look for SVG chart elements specifically
+                            if (node.tagName === 'svg' &&
+                                (node.classList?.contains('frappe-chart') ||
+                                 (node.getAttribute('width') === '701' && node.getAttribute('height') === '280'))) {
+                                console.log('📊 New SVG chart detected, hiding...');
+                                setTimeout(() => {
+                                    node.style.display = 'none';
+                                    totalHidden += 1;
+                                    createStatusIndicator('hidden', totalHidden);
+                                }, 100);
+                                break;
+                            }
+                            // Also check children but only for SVG charts
+                            else if (node.querySelector) {
+                                const svgChart = node.querySelector('svg.frappe-chart.chart, svg[width="701"][height="280"]');
+                                if (svgChart) {
+                                    console.log('📊 New chart in container detected, hiding...');
+                                    setTimeout(() => {
+                                        svgChart.style.display = 'none';
+                                        totalHidden += 1;
+                                        createStatusIndicator('hidden', totalHidden);
+                                    }, 100);
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        });
+
+        observer.observe(document.body, {
+            childList: true,
+            subtree: true
+        });
+    }
+
+    // Function to check if we're on a relevant report page
+    function isRelevantPage() {
+        return (
+            window.location.href.includes('query-report') ||
+            window.location.href.includes('Profit') ||
+            document.title.includes('Profit') ||
+            window.location.href.includes('report')
+        );
+    }
+
+    // Initialize the script
+    function init() {
+        console.log('🚀 ERPNext Chart Hider initialized');
+
+        // Inject CSS immediately
+        injectHideCSS();
+
+        if (isRelevantPage()) {
+            console.log('📈 Report page detected, hiding charts...');
+            hideCharts();
+        } else {
+            console.log('ℹ️ Not a report page, standing by...');
+            // Still inject CSS in case user navigates to report
+            createStatusIndicator('active');
+        }
+    }
+
+    // Add keyboard shortcuts
+    document.addEventListener('keydown', (e) => {
+        // Ctrl+Shift+H to toggle hiding
+        if (e.ctrlKey && e.shiftKey && e.key === 'H') {
+            e.preventDefault();
+            toggleChartHiding();
+        }
+        // Ctrl+Shift+R to force refresh hiding
+        else if (e.ctrlKey && e.shiftKey && e.key === 'R') {
+            e.preventDefault();
+            console.log('🔄 Force refresh chart hiding');
+            hideCharts();
+        }
+    });
+
+    // Start immediately and also when DOM is ready
+    init();
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+    }
+
+    // Also run when window loads
+    window.addEventListener('load', init);
+
+})();
+
