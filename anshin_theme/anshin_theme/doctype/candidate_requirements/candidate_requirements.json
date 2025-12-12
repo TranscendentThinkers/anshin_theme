@@ -1,0 +1,188 @@
+{
+ "actions": [],
+ "allow_events_in_timeline": 1,
+ "allow_import": 1,
+ "allow_rename": 1,
+ "autoname": "format:{customer}-{MM}-{YYYY}-{####}",
+ "creation": "2025-12-03 11:40:19.193014",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "customer",
+  "location",
+  "minimum_age",
+  "maximum_age",
+  "unit_price",
+  "column_break_okqz",
+  "project_name",
+  "start_date",
+  "end_date",
+  "number_of_positions",
+  "nationality",
+  "column_break_hgoo",
+  "project_overview",
+  "work_process",
+  "section_break_hzof",
+  "required_skills",
+  "section_break_eeyf",
+  "preferred_skills",
+  "section_break_qvtm",
+  "interviews",
+  "column_break_dxzh",
+  "working_hours",
+  "column_break_aiob",
+  "employment_structure"
+ ],
+ "fields": [
+  {
+   "fieldname": "customer",
+   "fieldtype": "Link",
+   "label": "Customer",
+   "options": "Customer"
+  },
+  {
+   "fieldname": "location",
+   "fieldtype": "Data",
+   "label": "Location"
+  },
+  {
+   "fieldname": "minimum_age",
+   "fieldtype": "Int",
+   "label": "Minimum Age"
+  },
+  {
+   "fieldname": "maximum_age",
+   "fieldtype": "Int",
+   "label": "Maximum Age"
+  },
+  {
+   "fieldname": "unit_price",
+   "fieldtype": "Data",
+   "label": "Unit Price"
+  },
+  {
+   "fieldname": "column_break_okqz",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "project_name",
+   "fieldtype": "Data",
+   "label": "Project Name"
+  },
+  {
+   "fieldname": "start_date",
+   "fieldtype": "Date",
+   "label": "Start Date"
+  },
+  {
+   "fieldname": "end_date",
+   "fieldtype": "Date",
+   "label": "End Date"
+  },
+  {
+   "fieldname": "number_of_positions",
+   "fieldtype": "Int",
+   "label": "Number of Positions"
+  },
+  {
+   "fieldname": "nationality",
+   "fieldtype": "Link",
+   "label": "Nationality",
+   "options": "Country"
+  },
+  {
+   "fieldname": "column_break_hgoo",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "project_overview",
+   "fieldtype": "Small Text",
+   "label": "Project Overview"
+  },
+  {
+   "fieldname": "work_process",
+   "fieldtype": "Small Text",
+   "label": "Work Process"
+  },
+  {
+   "collapsible": 1,
+   "fieldname": "section_break_hzof",
+   "fieldtype": "Section Break",
+   "label": "Required Skills"
+  },
+  {
+   "fieldname": "required_skills",
+   "fieldtype": "Table",
+   "label": "Required Skills",
+   "options": "Skill Child"
+  },
+  {
+   "collapsible": 1,
+   "fieldname": "section_break_eeyf",
+   "fieldtype": "Section Break",
+   "label": "Preferred Skills"
+  },
+  {
+   "fieldname": "preferred_skills",
+   "fieldtype": "Table",
+   "label": "Preferred Skills",
+   "options": "Skill Child"
+  },
+  {
+   "fieldname": "section_break_qvtm",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "interviews",
+   "fieldtype": "Small Text",
+   "label": "Interviews"
+  },
+  {
+   "fieldname": "column_break_dxzh",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "working_hours",
+   "fieldtype": "Small Text",
+   "label": "Working Hours"
+  },
+  {
+   "fieldname": "column_break_aiob",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "employment_structure",
+   "fieldtype": "Small Text",
+   "label": "Employment Structure"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2025-12-12 13:05:57.642545",
+ "modified_by": "Administrator",
+ "module": "Anshin Theme",
+ "name": "Candidate Requirements",
+ "naming_rule": "Expression",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "rows_threshold_for_grid_search": 20,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}

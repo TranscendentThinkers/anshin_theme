@@ -1,0 +1,90 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2025-12-01 15:22:54.797064",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "research_and_analysis",
+  "requirements_definition",
+  "basic_design",
+  "detailed_design",
+  "manufacturing_construction",
+  "unit_testing",
+  "comprehensive_test",
+  "operation_maintenance",
+  "other"
+ ],
+ "fields": [
+  {
+   "fieldname": "research_and_analysis",
+   "fieldtype": "Select",
+   "label": "Research and Analysis",
+   "options": "\u25cf\n\u25cb\n\u25ce"
+  },
+  {
+   "fieldname": "requirements_definition",
+   "fieldtype": "Select",
+   "label": "Requirements Definition",
+   "options": "\u25cf\n\u25cb\n\u25ce"
+  },
+  {
+   "fieldname": "basic_design",
+   "fieldtype": "Select",
+   "label": "Basic Design",
+   "options": "\u25cf\n\u25cb\n\u25ce"
+  },
+  {
+   "fieldname": "detailed_design",
+   "fieldtype": "Select",
+   "label": "Detailed Design",
+   "options": "\u25cf\n\u25cb\n\u25ce"
+  },
+  {
+   "fieldname": "manufacturing_construction",
+   "fieldtype": "Select",
+   "label": "Manufacturing Construction",
+   "options": "\u25cf\n\u25cb\n\u25ce"
+  },
+  {
+   "fieldname": "unit_testing",
+   "fieldtype": "Select",
+   "label": "Unit testing",
+   "options": "\u25cf\n\u25cb\n\u25ce"
+  },
+  {
+   "fieldname": "comprehensive_test",
+   "fieldtype": "Select",
+   "label": "Comprehensive Test",
+   "options": "\u25cf\n\u25cb\n\u25ce"
+  },
+  {
+   "fieldname": "operation_maintenance",
+   "fieldtype": "Select",
+   "label": "Operation Maintenance",
+   "options": "\u25cf\n\u25cb\n\u25ce"
+  },
+  {
+   "fieldname": "other",
+   "fieldtype": "Select",
+   "label": "Other",
+   "options": "\u25cf\n\u25cb\n\u25ce"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2025-12-12 13:07:18.673978",
+ "modified_by": "Administrator",
+ "module": "Anshin Theme",
+ "name": "Responsible Process",
+ "owner": "Administrator",
+ "permissions": [],
+ "row_format": "Dynamic",
+ "rows_threshold_for_grid_search": 20,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}
