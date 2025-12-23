@@ -1,0 +1,942 @@
+<!-- Include Frappe JS for API calls -->
+<script>
+if (typeof frappe === 'undefined') {
+    frappe = window.frappe || {};
+}
+</script>
+
+<!-- Load Revenue Dashboard JavaScript -->
+<script src="/assets/anshin_theme/js/revenue_dashboard.js"></script>
+
+<!-- Load Inter Font -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: linear-gradient(135deg, #f5f7fa 0%, #faf5ff 100%);
+    min-height: 100vh;
+    padding: 0;
+    color: #1a202c;
+}
+
+.dashboard-container {
+    max-width: 1600px;
+    margin: 0 auto;
+}
+
+.dashboard-header {
+    background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+    padding: 10px 40px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.dashboard-header h1 {
+    font-size: 24px;
+    font-weight: 700;
+    color: white;
+    margin: 0;
+}
+
+.dashboard-header .meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: rgba(255,255,255,0.9);
+    font-size: 14px;
+}
+
+.month-selector {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.month-selector select {
+    background: rgba(255,255,255,0.15);
+    color: white;
+    border: 2px solid rgba(255,255,255,0.3);
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s;
+    backdrop-filter: blur(10px);
+    outline: none;
+}
+
+.month-selector select:hover {
+    background: rgba(255,255,255,0.25);
+    border-color: rgba(255,255,255,0.5);
+}
+
+.month-selector select option {
+    background: #3b82f6;
+    color: white;
+}
+
+.date-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.refresh-btn {
+    background: rgba(255,255,255,0.2);
+    color: white;
+    border: 2px solid rgba(255,255,255,0.3);
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    backdrop-filter: blur(10px);
+}
+
+.refresh-btn:hover {
+    background: rgba(255,255,255,0.3);
+    border-color: rgba(255,255,255,0.5);
+}
+
+.content-wrapper {
+    padding: 0 20px 20px 20px;
+}
+
+.revenue-summary {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.revenue-card {
+    background: white;
+    padding: 28px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    transition: all 0.3s;
+    border-left: 3px solid;
+}
+
+.revenue-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.revenue-card.positive {
+    border-left-color: #047857;
+}
+
+.revenue-card.neutral {
+    border-left-color: #4f46e5;
+}
+
+.revenue-card.attention {
+    border-left-color: #ea580c;
+}
+
+.revenue-card-header {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #6b7280;
+    font-weight: 700;
+    margin-bottom: 12px;
+}
+
+.revenue-card-value {
+    font-size: 42px;
+    font-weight: 900;
+    margin-bottom: 8px;
+}
+
+.revenue-card-value.positive-color {
+    color: #047857;
+}
+
+.revenue-card-value.neutral-color {
+    color: #4f46e5;
+}
+
+.revenue-card-value.attention-color {
+    color: #c2410c;
+}
+
+.revenue-card-label {
+    font-size: 14px;
+    color: #4b5563;
+    font-weight: 500;
+}
+
+.revenue-breakdown {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 2px solid rgba(0,0,0,0.05);
+}
+
+.revenue-item {
+    font-size: 13px;
+}
+
+.revenue-item-label {
+    color: #9ca3af;
+    margin-bottom: 4px;
+}
+
+.revenue-item-value {
+    font-weight: 700;
+    font-size: 16px;
+    color: #1f2937;
+}
+
+.utilization-card {
+    background: white;
+    padding: 28px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+
+.utilization-header {
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 16px;
+    color: #1f2937;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.utilization-bar-container {
+    width: 100%;
+    height: 48px;
+    background: #f3f4f6;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 16px;
+}
+
+.utilization-bar-fill {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 16px;
+    color: white;
+    transition: width 1s ease;
+    background: linear-gradient(135deg, #6ee7b7 0%, #34d399 100%);
+}
+
+.utilization-metrics {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+}
+
+.util-metric {
+    text-align: center;
+}
+
+.util-metric-icon {
+    font-size: 20px;
+    margin-bottom: 4px;
+}
+
+.util-metric-label {
+    font-size: 11px;
+    color: #9ca3af;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+}
+
+.util-metric-value {
+    font-size: 24px;
+    font-weight: 800;
+}
+
+.summary-cards {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.summary-card {
+    background: white;
+    padding: 24px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    transition: all 0.3s;
+    border-left: 3px solid;
+}
+
+.summary-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.summary-card.critical {
+    border-left-color: #fca5a5;
+}
+
+.summary-card.urgent {
+    border-left-color: #fcd34d;
+}
+
+.summary-card.high {
+    border-left-color: #a5b4fc;
+}
+
+.summary-card.planning {
+    border-left-color: #c4b5fd;
+}
+
+.card-icon {
+    font-size: 32px;
+    margin-bottom: 12px;
+}
+
+.card-label {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #718096;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.card-count {
+    font-size: 36px;
+    font-weight: 800;
+    margin-bottom: 4px;
+    color: #1f2937;
+}
+
+.card-amount {
+    font-size: 18px;
+    font-weight: 700;
+    color: #4b5563;
+}
+
+.card-status {
+    font-size: 11px;
+    text-transform: uppercase;
+    font-weight: 700;
+    margin-top: 8px;
+    letter-spacing: 0.5px;
+    color: #9ca3af;
+}
+
+.total-impact {
+    background: linear-gradient(135deg, #06b6d4 0%, #3b82f6 100%);
+    padding: 15px 40px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    text-align: center;
+}
+
+.total-impact-label {
+    font-size: 13px;
+    color: white;
+    font-weight: 700;
+    margin-bottom: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.total-impact-value {
+    font-size: 36px;
+    font-weight: 900;
+    color: white;
+}
+
+.section {
+    background: white;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+
+.section-header {
+    background: white;
+    padding: 8px 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.3s;
+    border-left: 4px solid;
+}
+
+.section-header:hover {
+    background: #fafbfc;
+}
+
+.section-header.critical {
+    border-left-color: #fca5a5;
+}
+
+.section-header.urgent {
+    border-left-color: #fcd34d;
+}
+
+.section-header.high {
+    border-left-color: #a5b4fc;
+}
+
+.section-header.planning {
+    border-left-color: #c4b5fd;
+}
+
+.section-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.section-title h2 {
+    font-size: 16px;
+    font-weight: 700;
+    color: #4b5563;
+    margin: 0;
+    line-height: 1.2;
+}
+
+.section-meta {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 4px;
+}
+
+.section-count {
+    font-size: 13px;
+    font-weight: 600;
+    color: #4b5563;
+}
+
+.section-amount {
+    font-size: 12px;
+    font-weight: 500;
+    color: #6b7280;
+}
+
+.section-content {
+    padding: 0 32px 32px 32px;
+}
+
+/* Scrollable section content with max height */
+#section-all-employees .section-content,
+#section-bench .section-content,
+#section-expiring-this-month .section-content,
+#section-expiring-next-month .section-content,
+#section-expiring-next-3-months .section-content {
+    max-height: 500px;
+    overflow-y: auto;
+}
+
+.resource-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.resource-table thead {
+    background: #f9fafb;
+}
+
+.resource-table th {
+    padding: 14px 16px;
+    text-align: left;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #6b7280;
+    border-bottom: 2px solid #e5e7eb;
+}
+
+.resource-table td {
+    padding: 16px;
+    border-bottom: 1px solid #f3f4f6;
+    font-size: 14px;
+}
+
+.resource-table tbody tr {
+    transition: all 0.2s;
+}
+
+.resource-table tbody tr:hover {
+    background: #fafbfc;
+}
+
+.resource-name {
+    font-weight: 700;
+    color: #1f2937;
+}
+
+.resource-id {
+    font-size: 12px;
+    color: #9ca3af;
+    display: block;
+    margin-top: 2px;
+}
+
+.days-badge {
+    display: inline-block;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.days-critical {
+    background: #fed7aa;
+    color: #9a3412;
+}
+
+.days-urgent {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.days-high {
+    background: #dbeafe;
+    color: #1e40af;
+}
+
+.days-normal {
+    background: #e0e7ff;
+    color: #4338ca;
+}
+
+.cost-value {
+    font-weight: 700;
+    color: #1f2937;
+}
+
+.loss-value {
+    font-weight: 800;
+    color: #d97706;
+}
+
+.skills-list {
+    font-size: 13px;
+    color: #4b5563;
+    line-height: 1.6;
+}
+
+.skill-item {
+    display: inline-block;
+    margin-right: 12px;
+    margin-bottom: 4px;
+}
+
+.skill-name {
+    font-weight: 600;
+    color: #1f2937;
+}
+
+.skill-years {
+    color: #6b7280;
+}
+
+.client-info {
+    font-size: 13px;
+    color: #6b7280;
+}
+
+.client-name {
+    font-weight: 600;
+    color: #1f2937;
+}
+
+.toggle-icon {
+    font-size: 14px;
+    transition: transform 0.3s;
+}
+
+.section.collapsed .section-content {
+    display: none;
+}
+
+.section.collapsed .toggle-icon {
+    transform: rotate(-90deg);
+}
+
+@media (max-width: 1200px) {
+    .summary-cards, .revenue-summary {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .utilization-metrics {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .summary-cards, .revenue-summary {
+        grid-template-columns: 1fr;
+    }
+
+    .utilization-metrics {
+        grid-template-columns: 1fr;
+    }
+
+    .resource-table {
+        font-size: 12px;
+    }
+
+    .resource-table th,
+    .resource-table td {
+        padding: 10px;
+    }
+}
+</style>
+
+<div class="dashboard-container">
+    <!-- Gradient Header -->
+    <div class="dashboard-header">
+        <h1>💼 Resource Revenue Management Dashboard</h1>
+        <div class="meta">
+            <div class="month-selector">
+                <span class="date-label">📅</span>
+                <select id="monthSelect" onchange="updateDashboard()">
+                    <option value="0">January</option>
+                    <option value="1">February</option>
+                    <option value="2">March</option>
+                    <option value="3">April</option>
+                    <option value="4">May</option>
+                    <option value="5">June</option>
+                    <option value="6">July</option>
+                    <option value="7">August</option>
+                    <option value="8">September</option>
+                    <option value="9">October</option>
+                    <option value="10">November</option>
+                    <option value="11">December</option>
+                </select>
+                <select id="yearSelect" onchange="updateDashboard()">
+                    <option value="2024">2024</option>
+                    <option value="2025">2025</option>
+                    <option value="2026">2026</option>
+                </select>
+                <span style="margin-left: 8px;">| Last Updated: <span id="lastUpdateTime">--:--</span></span>
+            </div>
+            <div style="display: flex; gap: 10px;">
+                <button class="refresh-btn" onclick="openPrintModal()">🖨️ Print</button>
+                <button class="refresh-btn" onclick="refreshDashboard()">🔄 Refresh Now</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="content-wrapper">
+        <!-- Revenue Summary Cards -->
+        <div class="revenue-summary">
+            <div class="revenue-card positive">
+                <div class="revenue-card-header">✨ ACTIVE REVENUE (THIS MONTH)</div>
+                <div class="revenue-card-value positive-color" id="activeRevenue">¥0</div>
+                <div class="revenue-card-label">From <span id="billableCount">0</span> active resources</div>
+                <div class="revenue-breakdown">
+                    <div class="revenue-item">
+                        <div class="revenue-item-label">Billable</div>
+                        <div class="revenue-item-value" id="billableCount">0</div>
+                    </div>
+                    <div class="revenue-item">
+                        <div class="revenue-item-label">Avg Rate</div>
+                        <div class="revenue-item-value" id="avgRate">¥0</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="revenue-card neutral">
+                <div class="revenue-card-header">💰 NET MARGIN (THIS MONTH)</div>
+                <div class="revenue-card-value neutral-color" id="netMargin">¥0</div>
+                <div class="revenue-card-label">Revenue - Salary Costs</div>
+                <div class="revenue-breakdown">
+                    <div class="revenue-item">
+                        <div class="revenue-item-label">Margin %</div>
+                        <div class="revenue-item-value" id="marginPercentage">0%</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="revenue-card attention">
+                <div class="revenue-card-header">⚠️ BENCH COST IMPACT</div>
+                <div class="revenue-card-value attention-color" id="benchCost">¥0</div>
+                <div class="revenue-card-label" id="benchResourceCount">0 resources without billing</div>
+                <div class="revenue-breakdown">
+                    <div class="revenue-item">
+                        <div class="revenue-item-label">Action Items</div>
+                        <div class="revenue-item-value" id="actionItems">0</div>
+                    </div>
+                    <div class="revenue-item">
+                        <div class="revenue-item-label">At Risk</div>
+                        <div class="revenue-item-value" id="atRisk">¥0</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Utilization Bar -->
+        <div class="utilization-card">
+            <div class="utilization-header">📈 Resource Utilization</div>
+            <div class="utilization-bar-container">
+                <div class="utilization-bar-fill" id="utilizationBar" style="width: 0%;">0% Utilization</div>
+            </div>
+            <div class="utilization-metrics">
+                <div class="util-metric">
+                    <div class="util-metric-icon">💚</div>
+                    <div class="util-metric-label">BILLABLE</div>
+                    <div class="util-metric-value" style="color: #047857;" id="billableMetric">0</div>
+                </div>
+                <div class="util-metric">
+                    <div class="util-metric-icon">🟧</div>
+                    <div class="util-metric-label">ON BENCH</div>
+                    <div class="util-metric-value" style="color: #f59e0b;" id="onBenchMetric">0</div>
+                </div>
+                <div class="util-metric">
+                    <div class="util-metric-icon">📊</div>
+                    <div class="util-metric-label">TOTAL</div>
+                    <div class="util-metric-value" style="color: #1f2937;" id="totalMetric">0</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- All Employees Section -->
+        <div class="section collapsed" id="section-all-employees">
+            <div class="section-header" style="background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%); color: white;" onclick="toggleSection('section-all-employees')">
+                <div class="section-title">
+                    <span class="toggle-icon">▼</span>
+                    <h2 style="color: white;">👥 ALL EMPLOYEES LIST</h2>
+                </div>
+                <div class="section-meta">
+                    <div class="section-count" style="color: white;" id="totalEmployeesCount">0 Total Employees</div>
+                </div>
+            </div>
+            <div class="section-content">
+                <table class="resource-table">
+                    <thead>
+                        <tr>
+                            <th>Employee</th>
+                            <th>Employee ID</th>
+                            <th>CTC (Annual)</th>
+                            <th>Daily Cost</th>
+                            <th>Skills & Experience</th>
+                        </tr>
+                    </thead>
+                    <tbody id="allEmployeesTableBody">
+                        <!-- Populated by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Summary Cards -->
+        <div class="summary-cards">
+            <div class="summary-card critical">
+                <div class="card-icon">🔶</div>
+                <div class="card-label">On Bench Now</div>
+                <div class="card-count" id="onBenchNowCount">0</div>
+                <div class="card-amount" id="onBenchNowAmount">¥0/mo</div>
+                <div class="card-status">LOSING NOW</div>
+            </div>
+
+            <div class="summary-card urgent">
+                <div class="card-icon">⚡</div>
+                <div class="card-label" id="summaryCard2Label">Expiring This Month</div>
+                <div class="card-count" id="expiringThisMonthCount">0</div>
+                <div class="card-amount" id="expiringThisMonthAmount">¥0/mo</div>
+                <div class="card-status">IF NOT PLACED</div>
+            </div>
+
+            <div class="summary-card high">
+                <div class="card-icon">📋</div>
+                <div class="card-label" id="summaryCard3Label">Expiring Next Month</div>
+                <div class="card-count" id="expiringNextMonthCount">0</div>
+                <div class="card-amount" id="expiringNextMonthAmount">¥0/mo</div>
+                <div class="card-status">IF NOT PLACED</div>
+            </div>
+
+            <div class="summary-card planning">
+                <div class="card-icon">📅</div>
+                <div class="card-label" id="summaryCard4Label">Expiring in Next 3 Months</div>
+                <div class="card-count" id="expiringNext3MonthsCount">0</div>
+                <div class="card-amount" id="expiringNext3MonthsAmount">¥0 Total</div>
+                <div class="card-status">IF NOT PLACED</div>
+            </div>
+        </div>
+
+        <!-- Total Impact -->
+        <div class="total-impact">
+            <div class="total-impact-label">⚠️ TOTAL AT RISK (Monthly)</div>
+            <div class="total-impact-value" id="totalAtRisk">¥0</div>
+        </div>
+
+        <!-- On Bench Section -->
+        <div class="section collapsed" id="section-bench">
+            <div class="section-header critical" onclick="toggleSection('section-bench')">
+                <div class="section-title">
+                    <span class="toggle-icon">▼</span>
+                    <h2>🔶 CURRENTLY ON BENCH - IMMEDIATE LOSS</h2>
+                </div>
+                <div class="section-meta">
+                    <div class="section-count" id="onBenchCount">0 Resources</div>
+                    <div class="section-amount" id="onBenchLoss">Daily Loss: ¥0 | Monthly: ¥0</div>
+                </div>
+            </div>
+            <div class="section-content">
+                <table class="resource-table">
+                    <thead>
+                        <tr>
+                            <th>Resource</th>
+                            <th>Days on Bench</th>
+                            <th>Daily Cost</th>
+                            <th>Total Loss</th>
+                            <th>Previous Client</th>
+                            <th>Skills & Experience</th>
+                        </tr>
+                    </thead>
+                    <tbody id="onBenchTableBody">
+                        <!-- Populated by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Expiring This Month Section -->
+        <div class="section collapsed" id="section-expiring-this-month">
+            <div class="section-header urgent" onclick="toggleSection('section-expiring-this-month')">
+                <div class="section-title">
+                    <span class="toggle-icon">▼</span>
+                    <h2>⚡ <span id="section2Title">EXPIRING THIS MONTH</span> - ACT NOW</h2>
+                </div>
+                <div class="section-meta">
+                    <div class="section-count" id="expiringThisMonthSectionCount">0 Resources</div>
+                    <div class="section-amount" id="expiringThisMonthSectionLoss">Potential Loss: ¥0/day | ¥0/month</div>
+                </div>
+            </div>
+            <div class="section-content">
+                <table class="resource-table">
+                    <thead>
+                        <tr>
+                            <th>Resource</th>
+                            <th>Days Left</th>
+                            <th>Daily Cost</th>
+                            <th>Current Client</th>
+                            <th>Skills & Experience</th>
+                        </tr>
+                    </thead>
+                    <tbody id="expiringThisMonthTableBody">
+                        <!-- Populated by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Expiring Next Month Section -->
+        <div class="section collapsed" id="section-expiring-next-month">
+            <div class="section-header high" onclick="toggleSection('section-expiring-next-month')">
+                <div class="section-title">
+                    <span class="toggle-icon">▼</span>
+                    <h2>📋 EXPIRING IN <span id="section3Title">NEXT MONTH</span> - START MATCHING</h2>
+                </div>
+                <div class="section-meta">
+                    <div class="section-count" id="expiringNextMonthSectionCount">0 Resources</div>
+                    <div class="section-amount" id="expiringNextMonthSectionLoss">Potential Loss: ¥0/day | ¥0/month</div>
+                </div>
+            </div>
+            <div class="section-content">
+                <table class="resource-table">
+                    <thead>
+                        <tr>
+                            <th>Resource</th>
+                            <th>Days Left</th>
+                            <th>Daily Cost</th>
+                            <th>Current Client</th>
+                            <th>Skills & Experience</th>
+                        </tr>
+                    </thead>
+                    <tbody id="expiringNextMonthTableBody">
+                        <!-- Populated by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Expiring Next 3 Months Section -->
+        <div class="section collapsed" id="section-expiring-next-3-months">
+            <div class="section-header planning" onclick="toggleSection('section-expiring-next-3-months')">
+                <div class="section-title">
+                    <span class="toggle-icon">▼</span>
+                    <h2>📅 EXPIRING IN NEXT 3 MONTHS (<span id="section4Title">NEXT 3 MONTHS</span>) - MONITOR</h2>
+                </div>
+                <div class="section-meta">
+                    <div class="section-count" id="expiringNext3MonthsSectionCount">0 Resources</div>
+                    <div class="section-amount" id="expiringNext3MonthsSectionLoss">Potential Loss: ¥0/day | ¥0/month</div>
+                </div>
+            </div>
+            <div class="section-content">
+                <table class="resource-table">
+                    <thead>
+                        <tr>
+                            <th>Resource</th>
+                            <th>Days Left</th>
+                            <th>Daily Cost</th>
+                            <th>Current Client</th>
+                            <th>Skills & Experience</th>
+                        </tr>
+                    </thead>
+                    <tbody id="expiringNext3MonthsTableBody">
+                        <!-- Populated by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Print Modal -->
+    <div id="printModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 9999; align-items: center; justify-content: center;">
+        <div style="background: white; padding: 30px; border-radius: 12px; max-width: 500px; width: 90%;">
+            <h2 style="margin-top: 0; color: #1f2937;">Select Tables to Print</h2>
+            <div style="margin: 20px 0;">
+                <label style="display: block; margin-bottom: 12px; cursor: pointer;">
+                    <input type="checkbox" id="print-all-employees" checked style="margin-right: 8px;">
+                    <span>All Employees</span>
+                </label>
+                <label style="display: block; margin-bottom: 12px; cursor: pointer;">
+                    <input type="checkbox" id="print-on-bench" checked style="margin-right: 8px;">
+                    <span>On Bench</span>
+                </label>
+                <label style="display: block; margin-bottom: 12px; cursor: pointer;">
+                    <input type="checkbox" id="print-expiring-this-month" checked style="margin-right: 8px;">
+                    <span>Expiring This Month</span>
+                </label>
+                <label style="display: block; margin-bottom: 12px; cursor: pointer;">
+                    <input type="checkbox" id="print-expiring-next-month" checked style="margin-right: 8px;">
+                    <span>Expiring Next Month</span>
+                </label>
+                <label style="display: block; margin-bottom: 12px; cursor: pointer;">
+                    <input type="checkbox" id="print-expiring-next-3-months" checked style="margin-right: 8px;">
+                    <span>Expiring Next 3 Months</span>
+                </label>
+            </div>
+            <div style="display: flex; gap: 10px; justify-content: flex-end;">
+                <button onclick="closePrintModal()" style="padding: 10px 20px; background: #e5e7eb; border: none; border-radius: 6px; cursor: pointer; font-weight: 600;">Cancel</button>
+                <button onclick="printSelected()" style="padding: 10px 20px; background: #3b82f6; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: 600;">Print</button>
+            </div>
+        </div>
+    </div>
+</div>

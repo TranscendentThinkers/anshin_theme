@@ -19,6 +19,7 @@
   "end_date",
   "number_of_positions",
   "nationality",
+  "minimum_availability",
   "column_break_hgoo",
   "project_overview",
   "work_process",
@@ -154,12 +155,18 @@
    "fieldname": "employment_structure",
    "fieldtype": "Small Text",
    "label": "Employment Structure"
+  },
+  {
+   "fieldname": "minimum_availability",
+   "fieldtype": "Int",
+   "hidden": 1,
+   "label": "Minimum Availability"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-12-12 13:05:57.642545",
+ "modified": "2025-12-22 15:49:39.595946",
  "modified_by": "Administrator",
  "module": "Anshin Theme",
  "name": "Candidate Requirements",

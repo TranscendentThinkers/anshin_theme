@@ -2,7 +2,9 @@
 
 import frappe
 from frappe import _
+from frappe.utils import getdate, add_days
 import json
+from datetime import timedelta
 
 
 @frappe.whitelist()
@@ -79,6 +81,8 @@ def get_matched_candidates(requirement_id):
                 "customer",
                 "project_name",
                 "number_of_positions",
+                "start_date",
+                "minimum_availability",
             ],
             as_dict=True,
         )
@@ -185,25 +189,101 @@ def get_requirement_skills(requirement_id):
     }
 
 
+def check_contract_availability(
+    active_contract_end,
+    future_contract_start,
+    requirement_start_date,
+    minimum_availability
+):
+    """
+    Check if employee's contract status allows them to be shown in results.
+
+    Args:
+        active_contract_end: Latest end date of active contracts (or None)
+        future_contract_start: Earliest start date of future contracts (or None)
+        requirement_start_date: When the requirement starts
+        minimum_availability: Minimum days employee must be available (from requirement)
+
+    Returns:
+        tuple: (status, contract_info)
+            status: "AVAILABLE", "POTENTIAL", or "EXCLUDED"
+            contract_info: dict with contract details or None
+    """
+    from frappe.utils import getdate, add_days
+
+    # Convert dates to date objects
+    today = getdate()
+    req_start = getdate(requirement_start_date) if requirement_start_date else today
+    min_avail_days = minimum_availability or 0
+
+    # Calculate acceptable window end date
+    acceptable_window_end = add_days(req_start, min_avail_days)
+
+    # NO ACTIVE CONTRACT
+    if not active_contract_end:
+        # Check for interfering future contract
+        if future_contract_start:
+            future_start = getdate(future_contract_start)
+            availability_window = (future_start - req_start).days
+
+            if availability_window < min_avail_days:
+                # Future contract starts too soon
+                return "EXCLUDED", {"reason": "Future contract starts too soon"}
+
+        # No active contract, no interfering future contract
+        return "AVAILABLE", None
+
+    # HAS ACTIVE CONTRACT
+    contract_end = getdate(active_contract_end)
+
+    # Check if contract ends within acceptable window
+    if contract_end >= acceptable_window_end:
+        # Contract too long
+        return "EXCLUDED", {"reason": "Active contract too long"}
+
+    # Contract ends within acceptable window
+    # Check for interfering future contract
+    if future_contract_start:
+        future_start = getdate(future_contract_start)
+        availability_window = (future_start - req_start).days
+
+        if availability_window < min_avail_days:
+            # Will be under new contract too soon
+            return "EXCLUDED", {"reason": "Future contract interferes"}
+
+    # Show in POTENTIAL with contract info
+    days_until_available = (contract_end - today).days if contract_end > today else 0
+
+    contract_info = {
+        "hasContract": True,
+        "endsOn": str(contract_end),
+        "availableFrom": str(contract_end),
+        "daysUntilAvailable": days_until_available
+    }
+
+    return "POTENTIAL", contract_info
+
+
 def get_employees_with_skills():
     employees = frappe.db.sql("""
-        SELECT 
+        SELECT
             employee,
             employee_name,
             custom_age as age,
-            custom_nationality1 as nationality
+            custom_nationality as nationality
         FROM `tabEmployee`
         WHERE status='Active'
     """, as_dict=True)
 
     for emp in employees:
+        # Fetch employee skills
         emp["skills"] = frappe.db.sql("""
-            SELECT 
+            SELECT
                 skill,
                 skill_group,
                 proficiency,
                 IFNULL(no_of_years, 0) as years,
-                CASE 
+                CASE
                     WHEN proficiency = 'No experience, but knowledgeable' THEN 1
                     WHEN proficiency = 'Sufficient experience available, training possible' THEN 2
                     WHEN proficiency = 'Experienced, available' THEN 3
@@ -214,6 +294,33 @@ def get_employees_with_skills():
               AND parenttype='Employee'
               AND parentfield='custom_employee_skills'
         """, {"id": emp.employee}, as_dict=True)
+
+        # Fetch contract information
+        # Get latest end date of active contracts (end_date >= today)
+        # Note: We check dates only, not status field, as contracts may be marked
+        # Inactive even if they're valid future commitments
+        active_contract = frappe.db.sql("""
+            SELECT MAX(end_date) as active_contract_end
+            FROM `tabContract`
+            WHERE custom_candidate = %(employee)s
+              AND docstatus = 1
+              AND end_date >= CURDATE()
+        """, {"employee": emp.employee}, as_dict=True)
+
+        emp["active_contract_end"] = active_contract[0].active_contract_end if active_contract and active_contract[0].active_contract_end else None
+
+        # Get earliest start date of future contracts (start_date > today)
+        # Note: docstatus = 1 means submitted (excludes cancelled contracts which have docstatus = 2)
+        # We don't filter by status field as Inactive contracts may be valid future commitments
+        future_contract = frappe.db.sql("""
+            SELECT MIN(start_date) as future_contract_start
+            FROM `tabContract`
+            WHERE custom_candidate = %(employee)s
+              AND docstatus = 1
+              AND start_date > CURDATE()
+        """, {"employee": emp.employee}, as_dict=True)
+
+        emp["future_contract_start"] = future_contract[0].future_contract_start if future_contract and future_contract[0].future_contract_start else None
 
     return employees
 
@@ -229,6 +336,17 @@ def match_employee_to_requirement(employee, requirement, req_skills):
     )
 
     if age_status == "FAIL":
+        return None, "NOT_SHOWN"
+
+    # Check contract availability
+    contract_status, contract_info = check_contract_availability(
+        employee.get("active_contract_end"),
+        employee.get("future_contract_start"),
+        requirement.get("start_date"),
+        requirement.get("minimum_availability")
+    )
+
+    if contract_status == "EXCLUDED":
         return None, "NOT_SHOWN"
 
     required_matches = [
@@ -260,6 +378,7 @@ def match_employee_to_requirement(employee, requirement, req_skills):
         reqMissing,
         len(required_matches),
         age_status,
+        contract_status,
     )
 
     all_skill_matches = required_matches + preferred_matches
@@ -281,6 +400,10 @@ def match_employee_to_requirement(employee, requirement, req_skills):
         "prefTotal": len(preferred_matches),
         "skills": all_skill_matches,
     }
+
+    # Add contract info if exists
+    if contract_info:
+        candidate["contractInfo"] = contract_info
 
     return candidate, tier
 
@@ -335,8 +458,20 @@ def match_single_skill(req_skill, emp_skills, skill_type):
 
 
 def calculate_tier(
-    reqExceeds, reqExact, reqNear, reqBelow, reqMissing, reqTotal, age_status
+    reqExceeds, reqExact, reqNear, reqBelow, reqMissing, reqTotal, age_status, contract_status
 ):
+    # If employee has active contract, force to POTENTIAL tier (if skills AND age qualify)
+    if contract_status == "POTENTIAL":
+        # Check if both skills AND age meet POTENTIAL criteria
+        skill_match_80_percent = (reqExceeds + reqExact + reqNear) >= (reqTotal * 0.8)
+        age_acceptable = age_status in ("EXACT", "POTENTIAL")
+
+        if skill_match_80_percent and age_acceptable:
+            return "POTENTIAL"
+        else:
+            return "NOT_SHOWN"
+
+    # No active contract - normal tier calculation
     if reqExceeds >= (reqTotal * 0.5):
         return "EXCEEDS"
 
@@ -346,10 +481,13 @@ def calculate_tier(
     if (reqExceeds + reqExact + reqNear) == reqTotal:
         return "NEAR"
 
-    if (
-        (reqExceeds + reqExact + reqNear) >= (reqTotal * 0.8)
-        or age_status == "POTENTIAL"
-    ):
+    # POTENTIAL tier requires BOTH conditions:
+    # 1. Skills ≥80% match AND
+    # 2. Age within exact range OR ±2 tolerance
+    skill_match_80_percent = (reqExceeds + reqExact + reqNear) >= (reqTotal * 0.8)
+    age_acceptable = age_status in ("EXACT", "POTENTIAL")
+
+    if skill_match_80_percent and age_acceptable:
         return "POTENTIAL"
 
     return "NOT_SHOWN"
