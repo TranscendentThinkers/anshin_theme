@@ -61,7 +61,9 @@ app_include_css = [
     "/assets/anshin_theme/css/hide.css"
 ]
 web_include_js = [
-    "/assets/anshin_theme/js/candidate_matching_algorithms.js"
+    "/assets/anshin_theme/js/candidate_matching_algorithms.js",
+    "/assets/anshin_theme/js/dashbord.js"
+
 ]
 web_include_css = [
     "https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
@@ -252,4 +254,6 @@ web_include_css = [
 # default_log_clearing_doctypes = {
 # 	"Logging DocType Name": 30  # days to retain logs
 # }
-
+doctype_list_js = {
+    "Employee": "public/js/upload_excel.js"
+}

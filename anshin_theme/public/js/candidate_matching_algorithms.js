@@ -138,12 +138,12 @@ function display_matched_candidates(req, matches) {
     if (matches.near && matches.near.length > 0) {
         html += render_tier('⚠ NEAR MATCH', 'near', matches.near, req);
     }
-    
-    // POTENTIAL
-//    if (matches.potential && matches.potential.length > 0) {
-//        html += render_tier('🔍 POTENTIAL MATCH', 'potential', matches.potential, req);
-//    }
-    
+
+    // POTENTIAL - COMMENTED OUT
+    // if (matches.potential && matches.potential.length > 0) {
+    //     html += render_tier('🔍 POTENTIAL MATCH', 'potential', matches.potential, req);
+    // }
+
     if (!html) {
         html = '<div class="no-selection"><h3>No matching candidates found</h3></div>';
     }
@@ -170,7 +170,18 @@ function render_tier(title, tier, candidates, req) {
 
 function render_candidate(candidate, req) {
     const reqTotal = req.required ? req.required.length : 0;
-    
+
+    // Contract info display
+    let contractInfoHtml = '';
+    if (candidate.contractInfo && candidate.contractInfo.hasContract) {
+        contractInfoHtml = `
+            <div class="candidate-meta contract-info" style="margin-top: 8px; padding: 8px; background: #fff3cd; border-left: 3px solid #ffc107; border-radius: 4px;">
+                <span style="color: #856404;">📅 <strong>Available from:</strong> ${candidate.contractInfo.availableFrom}</span>
+                <span style="color: #856404; margin-left: 10px;">(Contract ends ${candidate.contractInfo.endsOn})</span>
+            </div>
+        `;
+    }
+
     return `
         <div class="candidate-card">
             <div class="candidate-header">
@@ -181,6 +192,7 @@ function render_candidate(candidate, req) {
                         <span>📅 Age ${candidate.age}${candidate.ageStatus ? ' (' + candidate.ageStatus + ')' : ''}</span>
                         <span>🌏 ${candidate.nationality}</span>
                     </div>
+                    ${contractInfoHtml}
                 </div>
                 <div class="candidate-stats">
                     <div class="stat">

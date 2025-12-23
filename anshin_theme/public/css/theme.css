@@ -1,270 +1,503 @@
+/* ========================================
+   ERPNext Custom Theme - Complete Styling
+   ======================================== */
+
+/* === Base Styles === */
 body {
-      background: white !important;
-    }
+  background: white !important;
+}
 
-    /* === Primary Button === */
-    .btn.btn-primary {
-      background: linear-gradient(to bottom, #f8573f, #d62323) !important;
-      color: white !important;
-      border: none !important;
-    }
+/* === Primary Button === */
+.btn.btn-primary {
+  background: linear-gradient(to bottom, #f8573f, #d62323) !important;
+  color: white !important;
+  border: none !important;
+}
 
-    /* === Cancel/Secondary Button === */
-    button.btn.btn-secondary,
-    button.btn.btn-default,
-    .btn.btn-secondary:not(.btn-primary),
-    .btn.btn-default:not(.btn-primary),
-    .btn.btn-light,
-    .btn-outline,
-    .btn-outline-secondary {
-      background-color: white !important;
-      border: 1px solid #d4bfae !important;
-      color: black !important;
-    }
+/* === Cancel/Secondary Button === */
+button.btn.btn-secondary,
+button.btn.btn-default,
+.btn.btn-secondary:not(.btn-primary),
+.btn.btn-default:not(.btn-primary),
+.btn.btn-light,
+.btn-outline,
+.btn-outline-secondary {
+  background-color: white !important;
+  border: 1px solid #d4bfae !important;
+  color: black !important;
+}
 
-    /* Cancel button specifically */
-    button.btn.btn-secondary.btn-default.btn-sm[data-label="Cancel"] {
-      color: black !important;
-      background-color: white !important;
-      border: 1px solid #d4bfae !important;
-    }
+/* Cancel button specifically */
+button.btn.btn-secondary.btn-default.btn-sm[data-label="Cancel"] {
+  color: black !important;
+  background-color: white !important;
+  border: 1px solid #d4bfae !important;
+}
 
-    /* Button Text Fix */
-    .btn.btn-secondary *,
-    .btn.btn-default * {
-      color: black !important;
-    }
+/* Button Text Fix */
+.btn.btn-secondary *,
+.btn.btn-default * {
+  color: black !important;
+}
 
-    .btn:hover {
-      opacity: 0.9 !important;
-    }
+.btn:hover {
+  opacity: 0.9 !important;
+}
 
-    /* === Child Table Header === */
-    .grid-heading-row > div {
-      background-color: #f3e8dd !important;
-      color: black !important;
-      font-weight: 600 !important;
-    }
+/* === Child Table Header === */
+.grid-heading-row > div {
+  background-color: #f3e8dd !important;
+  color: black !important;
+  font-weight: 600 !important;
+}
 
-    /* === Navbar Gradient === */
-    .page-head,
-    .page-head-content,
-    .navbar,
-    .navbar-default {
-      background: linear-gradient(to right, #e66e66, #7c4df1) !important;
-      color: white;
-    }
+/* === Navbar Gradient === */
+.page-head,
+.page-head-content,
+.navbar,
+.navbar-default {
+  background: linear-gradient(to right, #e66e66, #7c4df1) !important;
+  color: white;
+}
 
-    .navbar *,
-    .page-head *,
-    .page-head-content * {
-      color: white;
-      fill: white;
-    }
+.navbar *,
+.page-head *,
+.page-head-content * {
+  color: white;
+  fill: white;
+}
 
-    .page-head .row.flex.align-center.page-head-content.justify-between {
-      background: transparent !important;
-    }
+.page-head .row.flex.align-center.page-head-content.justify-between {
+  background: transparent !important;
+}
 
-    /* === Search Bar === */
-    .search-bar input[type="text"],
-    input[data-fieldname="search"],
-    input.list-search,
-    input.input-with-feedback,
-    input.form-control.input-sm,
-    input[data-doctype="Search Link"] {
-      color: black !important;
-      background-color: white !important;
-      border: 1px solid #6351a2 !important;
-      border-radius: 8px !important;
-      box-shadow: none !important;
-    }
+/* === Search Bar === */
+.search-bar input[type="text"],
+input[data-fieldname="search"],
+input.list-search,
+input.input-with-feedback,
+input.form-control.input-sm,
+input[data-doctype="Search Link"] {
+  color: black !important;
+  background-color: white !important;
+  border: 1px solid #6351a2 !important;
+  border-radius: 8px !important;
+  box-shadow: none !important;
+}
 
-    ::placeholder {
-      color: #999 !important;
-    }
-    .search-bar .awesomplete{ background: linear-gradient(to right, #A05FA8, #9358A2);}
+::placeholder {
+  color: #999 !important;
+}
 
-    /* === Input Field Styling === */
-    input[type="text"]:not(.search-bar input),
-    input[type="number"],
-    input[type="email"],
-    select,
-    textarea,
-    .form-control,
-    .input-with-feedback {
-      border: 1px solid #c4b3ec !important;
-      background-color: white !important;
-      color: #000 !important;
-      border-radius: 8px !important;
-      transition: border-color 0.2s ease-in-out;
-    }
+.search-bar .awesomplete {
+  background: linear-gradient(to right, #A05FA8, #9358A2);
+}
 
-    /* === Dropdown Menu - COMPREHENSIVE FIX === */
-    .page-head .container .row .page-actions .dropdown-menu .dropdown-item,
-    .dropdown-menu,
-    .dropdown-menu .dropdown-item,
-    a.grey-link.dropdown-item,
-    .dropdown-menu li,
-    .dropdown-menu li a,
-    .dropdown-menu li span,
-    .dropdown-menu .menu-item-label,
-    .dropdown-menu .pull-right,
-    .dropdown-menu kbd,
-    .dropdown-menu .text-muted {
-      background-color: #fdf1e7 !important;
-      color: black !important;
-      font-weight: 500 !important;
-    }
+/* === Input Field Styling === */
+input[type="text"]:not(.search-bar input),
+input[type="number"],
+input[type="email"],
+select,
+textarea,
+.form-control,
+.input-with-feedback {
+  border: 1px solid #c4b3ec !important;
+  background-color: white !important;
+  color: #000 !important;
+  border-radius: 8px !important;
+  transition: border-color 0.2s ease-in-out;
+}
 
-    .dropdown-menu .dropdown-item:hover,
-    a.grey-link.dropdown-item:hover,
-    .dropdown-menu li:hover,
-    .dropdown-menu li:hover a,
-    .dropdown-menu li:hover span {
-      background-color: #f3e8dd !important;
-      color: black !important;
-    }
+/* === Dropdown Menu - COMPREHENSIVE FIX === */
+.page-head .container .row .page-actions .dropdown-menu .dropdown-item,
+.dropdown-menu,
+.dropdown-menu .dropdown-item,
+a.grey-link.dropdown-item,
+.dropdown-menu li,
+.dropdown-menu li a,
+.dropdown-menu li span,
+.dropdown-menu .menu-item-label,
+.dropdown-menu .pull-right,
+.dropdown-menu kbd,
+.dropdown-menu .text-muted {
+  background-color: #fdf1e7 !important;
+  color: black !important;
+  font-weight: 500 !important;
+}
 
-    /* Force all dropdown text elements to be black */
-    .dropdown-menu:not(#toolbar-user) *,
-    .dropdown-menu:not(#toolbar-user) .dropdown-item *,
-    .dropdown-menu:not(#toolbar-user) li *,
-    .dropdown-menu:not(#toolbar-user) a *,
-    .dropdown-menu:not(#toolbar-user) span *,
-    .dropdown-menu:not(#toolbar-user) .menu-item-label *,
-    .dropdown-menu:not(#toolbar-user) kbd *,
-    .dropdown-menu:not(#toolbar-user) .text-muted *,
-    .dropdown-menu:not(#toolbar-user) .pull-right * {
-      color: black !important;
-    }
+.dropdown-menu .dropdown-item:hover,
+a.grey-link.dropdown-item:hover,
+.dropdown-menu li:hover,
+.dropdown-menu li:hover a,
+.dropdown-menu li:hover span {
+  background-color: #f3e8dd !important;
+  color: black !important;
+}
 
-    /* === Awesomplete Autocomplete Dropdown (FINAL FIX) === */
-    .awesomplete {
-      background:white;
-    }
+/* Force all dropdown text elements to be black */
+.dropdown-menu:not(#toolbar-user) *,
+.dropdown-menu:not(#toolbar-user) .dropdown-item *,
+.dropdown-menu:not(#toolbar-user) li *,
+.dropdown-menu:not(#toolbar-user) a *,
+.dropdown-menu:not(#toolbar-user) span *,
+.dropdown-menu:not(#toolbar-user) .menu-item-label *,
+.dropdown-menu:not(#toolbar-user) kbd *,
+.dropdown-menu:not(#toolbar-user) .text-muted *,
+.dropdown-menu:not(#toolbar-user) .pull-right * {
+  color: black !important;
+}
 
-    .awesomplete, .awesomplete * {
+/* === Awesomplete Autocomplete Dropdown (FINAL FIX) === */
+.awesomplete {
+  background: white;
+}
+
+.awesomplete,
+.awesomplete * {
   background-color: transparent !important;
   color: black !important;
 }
 
-    .awesomplete ul {
-      background-color: white !important;
-      border: 1px solid #d4bfae !important;
-      border-radius: 6px !important;
-    }
+.awesomplete ul {
+  background-color: white !important;
+  border: 1px solid #d4bfae !important;
+  border-radius: 6px !important;
+}
 
-    .awesomplete li {
-      background-color: transparent !important;
-      color: black !important;
-      font-weight: 500 !important;
-      padding: 6px 12px !important;
-    }
+.awesomplete li {
+  background-color: transparent !important;
+  color: black !important;
+  font-weight: 500 !important;
+  padding: 6px 12px !important;
+}
 
-    .awesomplete li[aria-selected="true"] {
-      background-color: transparent !important;
-      color: black !important;
-    }
+.awesomplete li[aria-selected="true"] {
+  background-color: transparent !important;
+  color: black !important;
+}
 
-    .awesomplete li:hover {
-      background-color: #f3e8dd !important;
-      color: black !important;
-    }
+.awesomplete li:hover {
+  background-color: #f3e8dd !important;
+  color: black !important;
+}
 
-    .awesomplete li *,
-    .awesomplete li span,
-    .awesomplete li a {
-      color: black !important;
-    }
+.awesomplete li *,
+.awesomplete li span,
+.awesomplete li a {
+  color: black !important;
+}
 
-    .awesomplete mark {
-      background: none !important;
-      color: black !important;
-      font-weight: bold !important;
-      display: inline !important;
-    }
+.awesomplete mark {
+  background: none !important;
+  color: black !important;
+  font-weight: bold !important;
+  display: inline !important;
+}
 
-    /* === Additional Dropdown Selectors === */
-    .menu-btn-group .dropdown-menu,
-    .menu-btn-group .dropdown-menu .dropdown-item,
-    .menu-btn-group .dropdown-menu li,
-    .menu-btn-group .dropdown-menu li a,
-    .menu-btn-group .dropdown-menu li span,
-    .show .dropdown-menu,
-    .show .dropdown-menu .dropdown-item,
-    .show .dropdown-menu li,
-    .show .dropdown-menu li a,
-    .show .dropdown-menu li span {
-      background-color: #fdf1e7 !important;
-      color: black !important;
-    }
+/* === Additional Dropdown Selectors === */
+.menu-btn-group .dropdown-menu,
+.menu-btn-group .dropdown-menu .dropdown-item,
+.menu-btn-group .dropdown-menu li,
+.menu-btn-group .dropdown-menu li a,
+.menu-btn-group .dropdown-menu li span,
+.show .dropdown-menu,
+.show .dropdown-menu .dropdown-item,
+.show .dropdown-menu li,
+.show .dropdown-menu li a,
+.show .dropdown-menu li span {
+  background-color: #fdf1e7 !important;
+  color: black !important;
+}
 
-    .menu-btn-group .dropdown-menu .dropdown-item:hover,
-    .menu-btn-group .dropdown-menu li:hover,
-    .menu-btn-group .dropdown-menu li:hover a,
-    .menu-btn-group .dropdown-menu li:hover span,
-    .show .dropdown-menu .dropdown-item:hover,
-    .show .dropdown-menu li:hover,
-    .show .dropdown-menu li:hover a,
-    .show .dropdown-menu li:hover span {
-      background-color: #f3e8dd !important;
-      color: black !important;
-    }
+.menu-btn-group .dropdown-menu .dropdown-item:hover,
+.menu-btn-group .dropdown-menu li:hover,
+.menu-btn-group .dropdown-menu li:hover a,
+.menu-btn-group .dropdown-menu li:hover span,
+.show .dropdown-menu .dropdown-item:hover,
+.show .dropdown-menu li:hover,
+.show .dropdown-menu li:hover a,
+.show .dropdown-menu li:hover span {
+  background-color: #f3e8dd !important;
+  color: black !important;
+}
 
-    /* === Status + Tab Colors === */
-    .indicator-pill,
-    .indicator,
-    .indicator span,
-    .indicator-pill span,
-    .status-text {
-      color: black !important;
-    }
+/* === Status + Tab Colors === */
+.indicator-pill,
+.indicator,
+.indicator span,
+.indicator-pill span,
+.status-text {
+  color: black !important;
+}
 
-    .form-tabs .nav-item a.nav-link,
-    .form-tabs .nav-item a.nav-link.active {
-      color: #4e2e7f !important;
-    }
+.form-tabs .nav-item a.nav-link,
+.form-tabs .nav-item a.nav-link.active {
+  color: #4e2e7f !important;
+}
 
-    .comment-box .comment-input-header,
-    .form-section .section-head,
-    .form-dashboard-section .section-head,
-    .timeline-item.activity-title h4 {
-      color: #4e2e7f !important;
-    }
+.comment-box .comment-input-header,
+.form-section .section-head,
+.form-dashboard-section .section-head,
+.timeline-item.activity-title h4 {
+  color: #4e2e7f !important;
+}
 
-    /* === Avatar Styling === */
-    .avatar-frame.standard-image {
-      background-color: #7c4df1 !important;
-      border: 2px solid white !important;
-      color: white !important;
-    }
+/* === Avatar Styling === */
+.avatar-frame.standard-image {
+  background-color: #7c4df1 !important;
+  border: 2px solid white !important;
+  color: white !important;
+}
 
-    .avatar-frame.standard-image span {
-      color: white !important;
-    }
+.avatar-frame.standard-image span {
+  color: white !important;
+}
 
-    /* === User Dropdown === */
-    #toolbar-user.dropdown-menu {
-      background: linear-gradient(to right, #e66e66, #7c4df1) !important;
-      color: white !important;
-      border-radius: 12px !important;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15) !important;
-      padding: 8px !important;
-      border: none !important;
-    }
+/* === User Dropdown === */
+#toolbar-user.dropdown-menu {
+  background: linear-gradient(to right, #e66e66, #7c4df1) !important;
+  color: white !important;
+  border-radius: 12px !important;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15) !important;
+  padding: 8px !important;
+  border: none !important;
+}
 
-    #toolbar-user .dropdown-item,
-    #toolbar-user .btn-reset.dropdown-item {
-      background: transparent !important;
-      color: white !important;
-      border-radius: 8px !important;
-      padding: 6px 12px !important;
-      font-weight: 500;
-    }
+#toolbar-user .dropdown-item,
+#toolbar-user .btn-reset.dropdown-item {
+  background: transparent !important;
+  color: white !important;
+  border-radius: 8px !important;
+  padding: 6px 12px !important;
+  font-weight: 500;
+}
 
-    #toolbar-user .dropdown-item:hover,
-    #toolbar-user .btn-reset.dropdown-item:hover {
-      background: rgba(255, 255, 255, 0.1) !important;
-    }
+#toolbar-user .dropdown-item:hover,
+#toolbar-user .btn-reset.dropdown-item:hover {
+  background: rgba(255, 255, 255, 0.1) !important;
+}
 
+/* ========================================
+   TAB BUTTON STYLING
+   ======================================== */
+
+/* Reset any default tab styling */
+ul#form-tabs.nav.form-tabs,
+.form-tabs {
+  border: none !important;
+  background: transparent !important;
+  margin-bottom: 16px !important;
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 4px !important;
+  padding: 0 !important;
+}
+
+/* Style for tab navigation items */
+.form-tabs .nav-item,
+ul#form-tabs.nav.form-tabs .nav-item {
+  margin: 0 !important;
+  padding: 0 !important;
+  border: none !important;
+}
+
+.form-tabs .nav-link,
+.form-tabs .nav-item .nav-link,
+ul.nav.form-tabs li.nav-item a.nav-link,
+ul#form-tabs.nav.form-tabs li.nav-item a.nav-link {
+  padding: 4px 4px !important;
+  margin: 0 !important;
+  background: #e88b8b !important;
+  border: 2px solid #d97373 !important;
+  border-radius: 8px !important;
+  color: #ffffff !important;
+  font-weight: 600 !important;
+  transition: all 0.2s ease !important;
+  cursor: pointer !important;
+  box-shadow:
+    0 3px 6px rgba(0, 0, 0, 0.25),
+    0 2px 4px rgba(0, 0, 0, 0.18),
+    inset 0 -2px 4px rgba(0, 0, 0, 0.1),
+    inset 0 1px 2px rgba(255, 255, 255, 0.15) !important;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3) !important;
+  outline: none !important;
+}
+
+.form-tabs .nav-link:hover,
+.form-tabs .nav-item .nav-link:hover,
+ul.nav.form-tabs li.nav-item a.nav-link:hover,
+ul#form-tabs.nav.form-tabs li.nav-item a.nav-link:hover {
+  background: #ef9a9a !important;
+  border-color: #e57373 !important;
+  color: #ffffff !important;
+  box-shadow:
+    0 4px 8px rgba(0, 0, 0, 0.3),
+    0 3px 6px rgba(0, 0, 0, 0.22),
+    inset 0 -2px 4px rgba(0, 0, 0, 0.12),
+    inset 0 1px 2px rgba(255, 255, 255, 0.2) !important;
+  transform: translateY(-1px) !important;
+}
+
+.form-tabs .nav-link.active,
+.form-tabs .nav-item .nav-link.active,
+ul.nav.form-tabs li.nav-item a.nav-link.active,
+ul#form-tabs.nav.form-tabs li.nav-item a.nav-link.active {
+  background: #5e72e4 !important;
+  border-color: #4c63d2 !important;
+  color: #ffffff !important;
+  box-shadow:
+    0 5px 12px rgba(94, 114, 228, 0.5),
+    0 3px 8px rgba(0, 0, 0, 0.3),
+    0 2px 5px rgba(0, 0, 0, 0.2),
+    inset 0 -2px 5px rgba(0, 0, 0, 0.15),
+    inset 0 1px 2px rgba(255, 255, 255, 0.2) !important;
+  font-weight: 700 !important;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4) !important;
+}
+
+.form-tabs .nav-link.active:hover,
+.form-tabs .nav-item .nav-link.active:hover,
+ul.nav.form-tabs li.nav-item a.nav-link.active:hover,
+ul#form-tabs.nav.form-tabs li.nav-item a.nav-link.active:hover {
+  background: #4c63d2 !important;
+  border-color: #3b52c0 !important;
+  color: #ffffff !important;
+  box-shadow:
+    0 6px 14px rgba(76, 99, 210, 0.6),
+    0 4px 10px rgba(0, 0, 0, 0.35),
+    0 2px 6px rgba(0, 0, 0, 0.25),
+    inset 0 -2px 5px rgba(0, 0, 0, 0.18),
+    inset 0 1px 2px rgba(255, 255, 255, 0.25) !important;
+}
+
+/* Style for Add Row buttons in child tables */
+.grid-add-row,
+.btn.btn-xs.btn-secondary.grid-add-row,
+button.grid-add-row,
+.grid-footer .btn-open-row,
+.grid-footer button {
+  padding: 6px 12px !important;
+  background: #e88b8b !important;
+  border: 2px solid #d97373 !important;
+  border-radius: 8px !important;
+  color: #ffffff !important;
+  font-weight: 600 !important;
+  transition: all 0.2s ease !important;
+  cursor: pointer !important;
+  box-shadow:
+    0 3px 6px rgba(0, 0, 0, 0.25),
+    0 2px 4px rgba(0, 0, 0, 0.18),
+    inset 0 -2px 4px rgba(0, 0, 0, 0.1),
+    inset 0 1px 2px rgba(255, 255, 255, 0.15) !important;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3) !important;
+}
+
+.grid-add-row:hover,
+.btn.btn-xs.btn-secondary.grid-add-row:hover,
+button.grid-add-row:hover,
+.grid-footer .btn-open-row:hover,
+.grid-footer button:hover {
+  background: #ef9a9a !important;
+  border-color: #e57373 !important;
+  color: #ffffff !important;
+  box-shadow:
+    0 4px 8px rgba(0, 0, 0, 0.3),
+    0 3px 6px rgba(0, 0, 0, 0.22),
+    inset 0 -2px 4px rgba(0, 0, 0, 0.12),
+    inset 0 1px 2px rgba(255, 255, 255, 0.2) !important;
+  transform: translateY(-1px) !important;
+}
+
+/* Style for collapsible section indicators */
+.form-section .section-head .collapse-indicator,
+.form-section .section-head svg,
+.collapsible .collapse-indicator,
+.collapsible svg,
+svg.es-icon.es-line.icon-sm,
+.form-section .section-head .icon,
+.section-head .collapse-indicator {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 28px !important;
+  height: 18px !important;
+  padding: 0px !important;
+  background: #e88b8b !important;
+  border: 2px solid #d97373 !important;
+  border-radius: 6px !important;
+  cursor: pointer !important;
+  transition: all 0.2s ease !important;
+  box-shadow:
+    0 2px 5px rgba(0, 0, 0, 0.2),
+    0 1px 3px rgba(0, 0, 0, 0.15),
+    inset 0 -1px 3px rgba(0, 0, 0, 0.1),
+    inset 0 1px 1px rgba(255, 255, 255, 0.15) !important;
+}
+
+.form-section .section-head .collapse-indicator:hover,
+.form-section .section-head svg:hover,
+.collapsible .collapse-indicator:hover,
+.collapsible svg:hover,
+svg.es-icon.es-line.icon-sm:hover,
+.form-section .section-head .icon:hover,
+.section-head .collapse-indicator:hover {
+  background: #ef9a9a !important;
+  border-color: #e57373 !important;
+  box-shadow:
+    0 3px 6px rgba(0, 0, 0, 0.25),
+    0 2px 4px rgba(0, 0, 0, 0.18),
+    inset 0 -1px 3px rgba(0, 0, 0, 0.12),
+    inset 0 1px 1px rgba(255, 255, 255, 0.2) !important;
+  transform: translateY(-1px) scale(1.05) !important;
+}
+
+/* Make SVG icons white */
+.form-section .section-head .collapse-indicator svg,
+.form-section .section-head svg,
+.collapsible .collapse-indicator svg,
+.collapsible svg,
+svg.es-icon.es-line.icon-sm,
+.section-head .collapse-indicator svg {
+  stroke: #ffffff !important;
+  fill: none !important;
+}
+
+/* Style for the tab content area */
+.form-tabs-list {
+  border-top: none !important;
+  margin-top: 0 !important;
+}
+
+/* Force white text color on all child elements */
+.form-tabs .nav-link,
+.form-tabs .nav-link *,
+.form-tabs .nav-item .nav-link,
+.form-tabs .nav-item .nav-link *,
+ul.nav.form-tabs li.nav-item a.nav-link,
+ul.nav.form-tabs li.nav-item a.nav-link *,
+ul#form-tabs.nav.form-tabs li.nav-item a.nav-link,
+ul#form-tabs.nav.form-tabs li.nav-item a.nav-link *,
+.grid-add-row,
+.grid-add-row *,
+.btn.btn-xs.btn-secondary.grid-add-row,
+.btn.btn-xs.btn-secondary.grid-add-row *,
+button.grid-add-row,
+button.grid-add-row *,
+.grid-footer .btn-open-row,
+.grid-footer .btn-open-row *,
+.grid-footer button,
+.grid-footer button * {
+  color: #ffffff !important;
+}
+
+/* === Fade-in Animation === */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
